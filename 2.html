@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hypnotic Relaxation Animation</title>
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+    background: #000; /* dark background for contrast */
+  }
+  canvas {
+    display: block;
+  }
+</style>
+</head>
+<body>
+<canvas id="hypnoCanvas"></canvas>
+<script>
+const canvas = document.getElementById('hypnoCanvas');
+const ctx = canvas.getContext('2d');
+
+let width = canvas.width = window.innerWidth;
+let height = canvas.height = window.innerHeight;
+
+window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+});
+
+// Hypnotic Spiral Settings
+const numRings = 60;
+const colors = ['#FF6B6B', '#FFD93D', '#6BCB77', '#4D96FF', '#9D4EDD'];
+let angleOffset = 0;
+
+function draw() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; // fading trail effect
+    ctx.fillRect(0, 0, width, height);
+
+    const cx = width / 2;
+    const cy = height / 2;
+
+    for (let i = 0; i < numRings; i++) {
+        const radius = i * 10 + 50;
+        const angle = angleOffset + i * 0.1;
+        const x = cx + Math.cos(angle) * radius;
+        const y = cy + Math.sin(angle) * radius;
+
+        ctx.beginPath();
+        ctx.arc(x, y, 10, 0, Math.PI * 2);
+        ctx.fillStyle = colors[i % colors.length];
+        ctx.fill();
+    }
+
+    angleOffset += 0.02; // controls rotation speed
+    requestAnimationFrame(draw);
+}
+
+draw();
+</script>
+</body>
+</html>
